@@ -35,16 +35,39 @@ class InfoController extends Controller
      */
     public function store(StoreInfoRequest $request)
     {
-        try {
-            $info = Info::create($request->all());
-            return ApiResponses::success($info, 'informacion creada');
-        } catch (ValidationException $e) {
-            return ApiResponses::error('Error de validacion: ' . $e->getMessage(), 422);
-        } catch (Exception $e) {
-            return ApiResponses::error('Error al crear la informacion en la base de datos: ' . $e->getMessage(), 500);
+        try{
+            $request->validate([
+                'dni' => 'required|unique|max:10',
+                'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'nacimiento' => 'required|integer|min:1', // coherencia
+                'matrimonio' => 'required|integer|min:1', // coherencia
+                'direccion' => 'required|string|max:500',
+                'telefono' => 'required|string|max:20',
+            ],
+            [
+                // requerimientos personalizados
+                'nombre.unique' => 'nombre ya en uso',
+                'apellido.unique' => 'apellido ya en uso',
+                'edad.integer' => 'edad debe ser un numero entero',
+                'telefono.max' => 'telefono debe tener maximo 20 caracteres',
+            ]);
+
+            $f = $request->file('foto');
+            $nombre = time().'_'.$f->getClientOriginalName(); // llamada al nombre
+
+            $f->move(public_path().'/logos/', $nombre); // mover a la carpeta public/logos
         }
-        
+            catch (ValidationException $e) {
+                return ApiResponses::error('Datos de entrada no validos', 422, $e->errors());
+            } catch (Exception $e) {
+                return ApiResponses::error('Error al procesar la solicitud', 500);
+        }
+            catch (Exception $e) {
+                return ApiResponses::error('Error de validacion', 401);   
+        }
+
     }
+    
 
     /**
      * Display the specified resource.

@@ -14,23 +14,24 @@ return new class extends Migration
         Schema::create('info', function (Blueprint $table) {
             $table->id();
             /** identificacion*/
-            $table->string('dni');
+            $table->integer('dni');
+            $table->string('foto');
 
             /** registro civil*/
-            $table->string('nacimiento');
-            $table->string('matrimonio');
-            $table->string('defuncion');
+            $table->date('nacimiento');
+            $table->date('matrimonio');
+            $table->date('defuncion');
 
             /** tributo municipales */
-            $table->string('impuesto');
-            $table->string('arbitrios');
+            $table->integer('impuesto');
+            $table->integer('arbitrios');
 
             /** propiedad y vivienta */
             $table->string('titulo_propiedad');
             $table->string('constancia_vivienda');
 
             /** otros servicios */
-            $table->string('multas');
+            $table->integer('multas');
             $table->string('licencias');
             
         });
