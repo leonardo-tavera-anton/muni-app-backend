@@ -7,9 +7,9 @@ use App\Http\Requests\StoreInfoRequest;
 use App\Http\Requests\UpdateInfoRequest;
 use App\Http\Responses\ApiResponses;
 use Illuminate\Validation\ValidationException;
-use Iluminate\Support\Facades\Storage;
-use Iluminate\Database\Eloquent\ModelNotFoundException;
-use Iluminate\validation\Rule;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -94,7 +94,7 @@ class InfoController extends Controller
     public function show($id)
     {
         try {
-            $info = Info::where(['id' => $id])->firstOrfail();
+            $info = Info::where(['id' => $id])->firstOrFail();
             return ApiResponses::success('Mostrando la informacion del usuario', 200, $info);
         } catch (ModelNotFoundException $e) {
             return ApiResponses::error('Error no encontrado', 404);
@@ -106,7 +106,7 @@ class InfoController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $info = Info::where(['id' => $id])->firstOrfail();
+            $info = Info::where(['id' => $id])->firstOrFail();
 
             $request->validate([
                 'nacimiento' => ['required', Rule::unique('nacimiento')->ignore($nacimiento)], 
@@ -142,7 +142,7 @@ class InfoController extends Controller
     public function destroy($id)
     {
         try {
-            $info = Info::where(['id' => $id])->firstOrfail();
+            $info = Info::where(['id' => $id])->firstOrFail();
             $info->delete();
             return ApiResponses::success(null, 'Informacion eliminada correctamente', 200);
         } catch (ModelNotFoundException $e) {
