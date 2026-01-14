@@ -12,6 +12,8 @@ Route::get('/', function () {
 // aqui se agregan todas las rutas para mostrar en los views
 Route::get('/api/infos', [InfoController::class, 'index']);
 Route::get('/api/usuarios', [UsuarioController::class, 'index']);
+Route::post('/api/usuarios', [UsuarioController::class, 'store']);
+
 
 // Add your app routes above the fallback
 
