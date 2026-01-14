@@ -37,25 +37,36 @@ class InfoController extends Controller
     {
         try{
             $request->validate([
-                'dni' => 'required|unique|max:10',
                 'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'nacimiento' => 'required|integer|min:1', // coherencia
-                'matrimonio' => 'required|integer|min:1', // coherencia
-                'direccion' => 'required|string|max:500',
-                'telefono' => 'required|string|max:20',
+                'nacimiento' => 'required|date', 
+                'matrimonio' => 'required|date', 
+                'defuncion' => 'required|date',
+                'impuesto' => 'required|integer',
+                'arbitrios' => 'required|integer',
+                'titulo_propiedad' => 'required|string',
+                'constancia_vivienda' => 'required|string',
+                'multas' => 'required|integer',
+                'licencias' => 'required|string',
             ],
             [
-                // requerimientos personalizados
-                'nombre.unique' => 'nombre ya en uso',
-                'apellido.unique' => 'apellido ya en uso',
-                'edad.integer' => 'edad debe ser un numero entero',
-                'telefono.max' => 'telefono debe tener maximo 20 caracteres',
+                // mensajes de error personalizados
+                'foto.image' => 'archivo debe ser una imagen valida',
+                'nacimiento.date' => 'fecha de nacimiento invalida',
+                'matrimonio.date' => 'fecha de matrimonio invalida',
+                'defuncion.date' => 'fecha de defuncion invalida',
+                'impuesto.integer' => 'impuesto debe ser un numero entero',
+                'arbitrios.integer' => 'arbitrios debe ser un numero entero',
+                'titulo_propiedad.string' => 'titulo de propiedad debe ser una cadena de texto',
+                'constancia_vivienda.string' => 'constancia de vivienda debe ser una cadena de texto',
+                'multas.integer' => 'multas debe ser un numero entero',
+                'licencias.string' => 'licencias debe ser una cadena de texto',
             ]);
-
+            
+            // por foto unica
             $f = $request->file('foto');
             $nombre = time().'_'.$f->getClientOriginalName(); // llamada al nombre
 
-            $f->move(public_path().'/logos/', $nombre); // mover a la carpeta public/logos
+            $f->move(public_path().'/foto/', $nombre); // mover a la carpeta public/foto
         }
             catch (ValidationException $e) {
                 return ApiResponses::error('Datos de entrada no validos', 422, $e->errors());

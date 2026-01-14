@@ -13,10 +13,7 @@ return new class extends Migration
     {
         Schema::create('info', function (Blueprint $table) {
             $table->id();
-            /** identificacion*/
-            $table->integer('dni');
-            $table->string('foto');
-
+            
             /** registro civil*/
             $table->date('nacimiento');
             $table->date('matrimonio');
