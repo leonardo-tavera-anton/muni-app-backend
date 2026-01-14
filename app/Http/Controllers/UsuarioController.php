@@ -13,7 +13,12 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $usuarios = Usuario::all();
+            return \App\Http\Responses\ApiResponses::success($usuarios, 'Lista de usuarios');
+        } catch (\Exception $e) {
+            return \App\Http\Responses\ApiResponses::error('Error al obtener usuarios', 500);
+        }
     }
 
     /**

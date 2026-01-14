@@ -15,5 +15,5 @@ class Usuario extends Model
         'password',
         'trabajo',
     ];
-    protected $timestamps = false;
-}
+    public $timestamps = false;
+} 

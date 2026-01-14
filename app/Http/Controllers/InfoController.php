@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Info;
 use App\Http\Requests\StoreInfoRequest;
 use App\Http\Requests\UpdateInfoRequest;
-use App\Http\Responses\ApiResponses; //novo
-use iluminate\Http\validationException; //novo
-use Exception; //novo
+use App\Http\Responses\ApiResponses;
+use Illuminate\Validation\ValidationException;
+use Exception;
 
 class InfoController extends Controller
 {
