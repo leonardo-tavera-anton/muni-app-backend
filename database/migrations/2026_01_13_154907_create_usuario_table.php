@@ -15,11 +15,9 @@ return new class extends Migration
         Schema::create('usuario', function (Blueprint $table) {
             $table->id();
             $table->string('dni')->unique();
-            $table->string('nombre'); // caos mismo nombre
+            $table->string('nombre'); // si existe mismo nombre
             $table->string('correo')->unique();
-            $table->unsignedBigInteger('id_partido'); // clave foranea
-            $table->foreign('id_partido')->references('id')->on('partido')->onDelete('cascade'); /* relacion con partido */
-
+ 
             /** informacion conectada */
             $table->unsignedBigInteger('id_info'); // clave foranea
             $table->foreign('id_info')->references('id')->on('info')->onDelete('cascade'); /* relacion con info */ 
